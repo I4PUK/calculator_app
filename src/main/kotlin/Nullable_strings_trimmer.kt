@@ -1,7 +1,6 @@
 package org.example
 
 fun main(){
-    val list1 = listOf<String?>("Hello,", null, "World!")
     val list2 = listOf<String?>(null, "Hello   ", null, null, ",", " World", null, "!")
 
     print(list2.deleteNullAndParseToString())

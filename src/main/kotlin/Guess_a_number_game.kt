@@ -44,7 +44,7 @@ class Game {
                 if (inputNumber == _number){
                     println("Congratulations! You've won!\nDo you want to try again?")
                     println("Enter y, to play again, n - to exit from game")
-                    break;
+                    break
                 }
             }
 

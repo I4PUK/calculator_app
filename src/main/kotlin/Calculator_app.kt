@@ -1,9 +1,7 @@
 package org.example
 
 fun main(){
-    var testCase1 : String = "5 * ( 5 - 2)";
-    val interpreter = MathExpressionIntepreter("5*(5-2)")
-    val intepreter1 = MathExpressionIntepreter(testCase1)
+    val interpreter = MathExpressionIntepreter(expression = "5*(5-2)")
     val result = interpreter.evaluate()
 
      print(result)
@@ -18,31 +16,30 @@ enum class Operation(val operation: String) {
 
 
 class MathExpressionIntepreter(expression: String) {
-    private val _expression = expression;
+    private val _expression = expression
 
     fun evaluate(): Float {
-        var processedExpression = calculateBrackets(_expression);
+        var processedExpression = calculateBrackets(_expression)
 
-        processedExpression = evaluateOperation(processedExpression, Operation.multiplication.operation);
-        processedExpression = evaluateOperation(processedExpression, Operation.divide.operation);
-        processedExpression = evaluateOperation(processedExpression, Operation.add.operation);
-        processedExpression = evaluateOperation(processedExpression, Operation.subtraction.operation);
+        processedExpression = evaluateOperation(processedExpression, Operation.multiplication.operation)
+        processedExpression = evaluateOperation(processedExpression, Operation.divide.operation)
+        processedExpression = evaluateOperation(processedExpression, Operation.add.operation)
+        processedExpression = evaluateOperation(processedExpression, Operation.subtraction.operation)
 
-        return if (processedExpression.toFloatOrNull() != null) processedExpression.toFloat() else 0.0F;
+        return if (processedExpression.toFloatOrNull() != null) processedExpression.toFloat() else 0.0F
     }
 
     private fun calculateBrackets(expression: String): String {
-        var localExpression: String = expression;
+        var localExpression: String = expression
 
         while (localExpression.contains(')')) {
             val closingBracketIndex: Int = localExpression.indexOf(')')
             val localSubstring = localExpression.substring(0, closingBracketIndex)
             val openingBracketIndex: Int = localSubstring.lastIndexOf('(')
-            val localSub1 = localSubstring.substring(openingBracketIndex + 1, closingBracketIndex)
 
             val bracketContent: String =
                 expression.substring(openingBracketIndex + 1, closingBracketIndex)
-            val bracketResult: Float = evaluateExpression(bracketContent).toFloat()
+            val bracketResult: Float = evaluateExpression(bracketContent)
             localExpression = expression.replaceRange(
                 openingBracketIndex,
                 closingBracketIndex + 1, bracketResult.toString()
@@ -62,14 +59,14 @@ class MathExpressionIntepreter(expression: String) {
 
         for (i in splittedOperators.indices) {
             when (splittedOperators[i]) {
-                '+' -> result += listOfNumbers[i + 1].toFloat();
-                '-' -> result -= listOfNumbers[i + 1].toFloat();
-                '*' -> result *= listOfNumbers[i + 1].toFloat();
-                '/' -> result /= listOfNumbers[i + 1].toFloat();
+                '+' -> result += listOfNumbers[i + 1].toFloat()
+                '-' -> result -= listOfNumbers[i + 1].toFloat()
+                '*' -> result *= listOfNumbers[i + 1].toFloat()
+                '/' -> result /= listOfNumbers[i + 1].toFloat()
             }
         }
 
-        return result;
+        return result
     }
 
     private fun evaluateOperation(
@@ -90,7 +87,7 @@ class MathExpressionIntepreter(expression: String) {
             val leftOperand: String = numericalValues[operationIndex]
             val rightOperand: String = numericalValues[operationIndex + 1]
 
-            val bracketContent: String = "$leftOperand$operation$rightOperand"
+            val bracketContent = "$leftOperand$operation$rightOperand"
 
             val bracketResult: Float = evaluateExpression(bracketContent)
             localExpression = localExpression.replace(bracketContent, "$bracketResult")
